@@ -7,19 +7,19 @@
 	<h1>Hello World</h1>
 	<p>Instruction text about application should be here</p>
 		<button onclick="myFunction()">Add</button>
-
-	<div id="color-1">
-		<input type="text" name="num" >
-	</div>
-	<div id="color-2">
-		<input type="text" name="num">
-	</div>
-
+	<ul id="container">	
+		<li id="color-0">
+			<input type="text" name="num" >
+		</li>
+		<li id="color-1">
+			<input type="text" name="num">
+		</li>
+	</ul>
 	<script>
-		var x = 3;
+		var x = 2;
 		
 function myFunction() {
-		var divInp =document.createElement("div");
+		var divInp =document.createElement("li");
   		var inp = document.createElement("INPUT");
   		var rem = document.createElement("button");
   inp.setAttribute("type", "text");
@@ -28,25 +28,30 @@ function myFunction() {
   rem.setAttribute("onclick", "myRemove(this)");
   divInp.appendChild(inp);
   divInp.appendChild(rem);
-  document.body.appendChild(divInp);
+  document.getElementById("container").appendChild(divInp)
+  //document.body.appendChild(divInp);
   x = x+1;
   return x;
+
 }
 
 function myRemove(el){
-
+	var xc = document.getElementById("container").getElementsByTagName("li").length; 
+	
 	var element = el.parentElement;
 	 element.remove();
 	 x = x-1;
-	for ( i = x; i >= 3 ; i--){
-		var elA ="color-" + i;
-		var elB ="color-" + (i-1);
+	
+	for ( i = xc-2; i >= 0 ; i--){
+		var elA =i +1;
+		var elB ="color-" + i;
 		var ty= "base: " + elA + "change: " + elB;
-		document.getElementById(elA).setAttribute("id", elB);
-		console.log(ty);
+		var xcLi = document.getElementById("container").getElementsByTagName("li")[i];
+		xcLi.setAttribute("id", elB);
+		console.log(i)
 	}
-	return x;
 
+	return x;
 }
 </script>	
 
