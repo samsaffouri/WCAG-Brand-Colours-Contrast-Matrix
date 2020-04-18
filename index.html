@@ -4,6 +4,51 @@
 	<title>Brand Colors</title>
 </head>
 <body>
-	Hello World))html
+	<h1>Hello World</h1>
+	<p>Instruction text about application should be here</p>
+		<button onclick="myFunction()">Add</button>
+
+	<div id="color-1">
+		<input type="text" name="num" >
+	</div>
+	<div id="color-2">
+		<input type="text" name="num">
+	</div>
+
+	<script>
+		var x = 3;
+		
+function myFunction() {
+		var divInp =document.createElement("div");
+  		var inp = document.createElement("INPUT");
+  		var rem = document.createElement("button");
+  inp.setAttribute("type", "text");
+  rem.innerHTML = "Remove";
+  divInp.setAttribute("id", "color-"+x);
+  rem.setAttribute("onclick", "myRemove(this)");
+  divInp.appendChild(inp);
+  divInp.appendChild(rem);
+  document.body.appendChild(divInp);
+  x = x+1;
+  return x;
+}
+
+function myRemove(el){
+
+	var element = el.parentElement;
+	 element.remove();
+	 x = x-1;
+	for ( i = x; i >= 3 ; i--){
+		var elA ="color-" + i;
+		var elB ="color-" + (i-1);
+		var ty= "base: " + elA + "change: " + elB;
+		document.getElementById(elA).setAttribute("id", elB);
+		console.log(ty);
+	}
+	return x;
+
+}
+</script>	
+
 </body>
-</html>
+<html>
