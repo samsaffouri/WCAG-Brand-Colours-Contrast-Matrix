@@ -65,15 +65,10 @@ function CheckFunc(){
 	for (i = 0 ; i <= xc-1 ; i++){
 			var cc = document.getElementById("color-"+ i);
 			var cc0 = cc.getElementsByTagName("input")[0].value;
-<<<<<<< HEAD
-=======
-			console.log(cc0);
->>>>>>> 73767b719018e82cde5da113b9126860714ecad0
 			arr.push(cc0);
 		}
 	var arrLenght = arr.length;
 		html = "<table><tr>"; 	
-<<<<<<< HEAD
 	for (y = 0; y < arr.length; y++){
 		var yReapet = arr.length;
 		html += "<td>" + arr[y] + "</td>";
@@ -90,18 +85,15 @@ function CheckFunc(){
       			html += "<td>YES</td>";
       			}*/
 	}
-	
-=======
-	for (y = 0; y< arr.length; y++){
+	/*for (y = 0; y< arr.length; y++){
 		html += "<td>" + arr[y] + "</td>";
 		var next = i+1;
     	if (next%arrLenght==0 && next!=arr.length) {
       	html += "</tr><tr>";
-    }
+    }*/
    
 	
-	}	
->>>>>>> 73767b719018e82cde5da113b9126860714ecad0
+
  html += "</tr></table>";
     document.getElementById("arrayHere").innerHTML = html;
 }
