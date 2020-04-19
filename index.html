@@ -2,8 +2,104 @@
 <html>
 <head>
 	<title>Brand Colors</title>
+	<style type="text/css">
+		td{
+			border: 1px solid #000;
+		}
+	</style>
 </head>
 <body>
-	Hello World))html
+	<h1>Hello World</h1>
+	<p>Instruction text about application should be here</p>
+		<button onclick="myFunction()">Add</button>
+		<button onclick="CheckFunc()">check</button>
+	<ul id="container">	
+		<li id="color-0">
+			<input type="text" name="num" id="bb">
+		</li>
+		<li id="color-1">
+			<input type="text" name="num">
+		</li>
+	</ul>
+	<div id="arrayHere"></div>
+	<script>
+	var x = 2;
+		
+function myFunction() {
+		var divInp =document.createElement("li");
+  		var inp = document.createElement("INPUT");
+  		var rem = document.createElement("button");
+  inp.setAttribute("type", "text");
+  rem.innerHTML = "Remove";
+  divInp.setAttribute("id", "color-"+x);
+  rem.setAttribute("onclick", "myRemove(this)");
+  divInp.appendChild(inp);
+  divInp.appendChild(rem);
+  document.getElementById("container").appendChild(divInp)
+  //document.body.appendChild(divInp);
+  x = x+1;
+  return x;
+
+}
+
+function myRemove(el){
+	var xc = document.getElementById("container").getElementsByTagName("li").length; 
+
+	var element = el.parentElement;
+	 element.remove();
+	 x = x-1;
+	
+	for ( i = xc-2; i >= 0 ; i--){
+		var elA =i +1;
+		var elB ="color-" + i;
+		var xcLi = document.getElementById("container").getElementsByTagName("li")[i];
+		xcLi.setAttribute("id", elB);
+
+	}
+
+	return x;
+}
+function CheckFunc(){
+	var xc = document.getElementById("container").getElementsByTagName("li").length; 
+	var arr = [];
+	for (i = 0 ; i <= xc-1 ; i++){
+			var cc = document.getElementById("color-"+ i);
+			var cc0 = cc.getElementsByTagName("input")[0].value;
+
+			arr.push(cc0);
+		}
+	var arrLenght = arr.length;
+		html = "<table><tr>"; 	
+	for (y = 0; y < arr.length; y++){
+		var yReapet = arr.length;
+		html += "<td>" + arr[y] + "</td>";
+    	var next= y+1;
+      	yReapet = yReapet -1;
+      	console.log(yReapet);
+      	if(y == arr.length && yReapet !== -1 ){
+      		y = 0 ;
+      		html +="</tr><tr>"
+      		alert("yes")
+      		return y;
+      	}	
+   /*if (arr[y] > arr[y+1]){
+      			html += "<td>YES</td>";
+      			}*/
+	}
+	
+	for (y = 0; y< arr.length; y++){
+		html += "<td>" + arr[y] + "</td>";
+		var next = i+1;
+    	if (next%arrLenght==0 && next!=arr.length) {
+      	html += "</tr><tr>";
+    }
+   
+	
+	}	
+ html += "</tr></table>";
+    document.getElementById("arrayHere").innerHTML = html;
+}
+</script>	
+
 </body>
-</html>
+<html>
