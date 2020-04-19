@@ -65,20 +65,27 @@ function CheckFunc(){
 	for (i = 0 ; i <= xc-1 ; i++){
 			var cc = document.getElementById("color-"+ i);
 			var cc0 = cc.getElementsByTagName("input")[0].value;
-			console.log(cc0);
 			arr.push(cc0);
 		}
 	var arrLenght = arr.length;
 		html = "<table><tr>"; 	
-	for (y = 0; y< arr.length; y++){
+	for (y = 0; y < arr.length; y++){
+		var yReapet = arr.length;
 		html += "<td>" + arr[y] + "</td>";
-		var next = i+1;
-    	if (next%arrLenght==0 && next!=arr.length) {
-      	html += "</tr><tr>";
-    }
-   
+    	var next= y+1;
+      	yReapet = yReapet -1;
+      	console.log(yReapet);
+      	if(y == arr.length && yReapet !== -1 ){
+      		y = 0 ;
+      		html +="</tr><tr>"
+      		alert("yes")
+      		return y;
+      	}	
+   /*if (arr[y] > arr[y+1]){
+      			html += "<td>YES</td>";
+      			}*/
+	}
 	
-	}	
  html += "</tr></table>";
     document.getElementById("arrayHere").innerHTML = html;
 }
