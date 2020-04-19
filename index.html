@@ -2,6 +2,11 @@
 <html>
 <head>
 	<title>Brand Colors</title>
+	<style type="text/css">
+		td{
+			border: 1px solid #000;
+		}
+	</style>
 </head>
 <body>
 	<h1>Hello World</h1>
@@ -16,6 +21,7 @@
 			<input type="text" name="num">
 		</li>
 	</ul>
+	<div id="arrayHere"></div>
 	<script>
 	var x = 2;
 		
@@ -38,7 +44,7 @@ function myFunction() {
 
 function myRemove(el){
 	var xc = document.getElementById("container").getElementsByTagName("li").length; 
-	
+
 	var element = el.parentElement;
 	 element.remove();
 	 x = x-1;
@@ -55,11 +61,26 @@ function myRemove(el){
 }
 function CheckFunc(){
 	var xc = document.getElementById("container").getElementsByTagName("li").length; 
+	var arr = [];
 	for (i = 0 ; i <= xc-1 ; i++){
-			var cc = document.getElementById("color-"+ i)
-			var cc0 = cc.getElementsByTagName("input")[0];
-			console.log(cc0.value);
+			var cc = document.getElementById("color-"+ i);
+			var cc0 = cc.getElementsByTagName("input")[0].value;
+			console.log(cc0);
+			arr.push(cc0);
 		}
+	var arrLenght = arr.length;
+		html = "<table><tr>"; 	
+	for (y = 0; y< arr.length; y++){
+		html += "<td>" + arr[y] + "</td>";
+		var next = i+1;
+    	if (next%arrLenght==0 && next!=arr.length) {
+      	html += "</tr><tr>";
+    }
+   
+	
+	}	
+ html += "</tr></table>";
+    document.getElementById("arrayHere").innerHTML = html;
 }
 </script>	
 
