@@ -59,41 +59,40 @@ function myRemove(el){
 
 	return x;
 }
+
 function CheckFunc(){
-	var xc = document.getElementById("container").getElementsByTagName("li").length; 
+	var html ="";	
 	var arr = [];
+	document.getElementById("arrayHere").innerHTML = "";
+
+	var xc = document.getElementById("container").getElementsByTagName("li").length; 
+	html += "<table>";
 	for (i = 0 ; i <= xc-1 ; i++){
 			var cc = document.getElementById("color-"+ i);
 			var cc0 = cc.getElementsByTagName("input")[0].value;
 			arr.push(cc0);
 		}
-	var arrLenght = arr.length;
-		html = "<table><tr>"; 	
-	for (y = 0; y < arr.length; y++){
-		var yReapet = arr.length;
-		html += "<td>" + arr[y] + "</td>";
-    	var next= y+1;
-      	yReapet = yReapet -1;
-      	console.log(yReapet);
-      	if(y == arr.length && yReapet !== -1 ){
-      		y = 0 ;
-      		html +="</tr><tr>"
-      		alert("yes")
-      		return y;
-      	}	
-   /*if (arr[y] > arr[y+1]){
-      			html += "<td>YES</td>";
-      			}*/
+		
+	yReapet = arr.length; 
+	var yReapet = arr.length;
+	if (yReapet > 0 && yReapet !== 0 ){
+		for (ytr = 0; ytr < arr.length; ytr++){
+		html += "<tr>";	
+			for (y = 0; y < arr.length; y++){
+			html += "<td>" + arr[y] + "</td>";
+	      	}
+      	} 
+      	html += "</tr>";
+      	yReapet--;
 	}
-	/*for (y = 0; y< arr.length; y++){
-		html += "<td>" + arr[y] + "</td>";
-		var next = i+1;
-    	if (next%arrLenght==0 && next!=arr.length) {
-      	html += "</tr><tr>";
-    }*/
-
- html += "</tr></table>";
+    html += "</table>";
     document.getElementById("arrayHere").innerHTML = html;
+
+}
+
+function createTable(){
+	
+
 }
 </script>	
 
