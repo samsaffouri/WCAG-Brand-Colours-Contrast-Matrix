@@ -63,8 +63,9 @@ function myRemove(el){
 function CheckFunc(){
 	var html ="";	
 	var arr = [];
-	document.getElementById("arrayHere").innerHTML = "";
+	var yReapet = arr.length;
 
+	document.getElementById("arrayHere").innerHTML = "";
 	var xc = document.getElementById("container").getElementsByTagName("li").length; 
 	html += "<table>";
 	for (i = 0 ; i <= xc-1 ; i++){
@@ -72,20 +73,26 @@ function CheckFunc(){
 			var cc0 = cc.getElementsByTagName("input")[0].value;
 			arr.push(cc0);
 		}
-		
-	yReapet = arr.length; 
-	var yReapet = arr.length;
-	if (yReapet > 0 && yReapet !== 0 ){
-		for (ytr = 0; ytr < arr.length; ytr++){
-		html += "<tr>";	
-			for (y = 0; y < arr.length; y++){
-			html += "<td>" + arr[y] + "</td>";
+	for(g = 0; g < arr.length; g++){
+		if (g == 0){
+				html += "<tr><td></td>";	
+				for (y = 0; y < arr.length; y++){
+				html += "<td>" + arr[y] + "</td>";    	
 	      	}
-      	} 
-      	html += "</tr>";
-      	yReapet--;
-	}
-    html += "</table>";
+	      html += "</tr>";
+		}
+		if (arr.length > g > 0 ){
+				html += "<tr><td>" + arr[g] + "</td>";	
+				for (x = 0; x < arr.length; x++){
+				html += "<td>yes</td>";
+		      	}
+	      		      	html += "</tr>";
+ 
+		}else{
+			html += "</table>";
+
+		} 	
+	}	     
     document.getElementById("arrayHere").innerHTML = html;
 
 }
