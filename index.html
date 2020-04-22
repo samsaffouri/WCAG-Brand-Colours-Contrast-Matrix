@@ -6,36 +6,73 @@
 		td{
 			border: 1px solid #000;
 		}
+		ul{
+			list-style: none;
+		}
 	</style>
 </head>
 <body>
-	<h1>Hello World</h1>
+	<h1>Brand Colors</h1>
 	<p>Instruction text about application should be here</p>
 		<button onclick="myFunction()">Add</button>
 		<button onclick="CheckFunc()">check</button>
 	<ul id="container">	
 		<li id="color-0">
-			<input type="text" name="num" id="bb">
+			<input type="color" name="num" id="bb" value="#000000">
 		</li>
 		<li id="color-1">
-			<input type="text" name="num">
+			<input type="color" name="num" value="#ffffff">
 		</li>
 	</ul>
 	<div id="arrayHere"></div>
 
-<script type="text/javascript" src="/Users/issams/Documents/git2020/gitlearing-v1/colors/node_modules/amdefine/amdefine.js"></script>
-<script type="text/javascript" src="colors/node_modules/color-contrast-checker/src/color-contrast-checker.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.19/require.js"></script>
-
 <script>
-var ccc = new ColorContrastChecker();
-var color1 = "#FFFFFF";
-var color2 = "#000000";
+// function from https://stackoverflow.com/a/5624139/3695983
+function hexToRgb(hex) {
+  var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+  hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+    return r + r + g + g + b + b;
+  });
 
-if (ccc.isLevelAA(color1, color2, 14)) {
-    alert("Valid Level AA");
-} else {
-    alert("Invalid Contrast");
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+}
+
+// function from https://stackoverflow.com/a/9733420/3695983                     
+function luminance(r, g, b) {
+  var a = [r, g, b].map(function (v) {
+    v /= 255;
+    return v <= 0.03928
+      ? v / 12.92
+    : Math.pow( (v + 0.055) / 1.055, 2.4 );
+  });
+  return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+}
+
+function calculateRatio(cl1, cl2) {
+
+  // read the colors and transform them into rgb format
+  const color1 = cl1 ;
+  const color2 = cl2 ;
+  const color1rgb = hexToRgb(color1);
+  const color2rgb = hexToRgb(color2);
+
+  // calculate the relative luminance
+  const color1luminance = luminance(color1rgb.r, color1rgb.g, color1rgb.b);
+  const color2luminance = luminance(color2rgb.r, color2rgb.g, color2rgb.b);
+
+  // calculate the color contrast ratio
+  const ratio = color1luminance > color2luminance 
+  ? ((color2luminance + 0.05) / (color1luminance + 0.05))
+  : ((color1luminance + 0.05) / (color2luminance + 0.05));
+ 
+ if(ratio < 1/4.5) {result='PASS';}else{ result= 'FAIL';}
+
+  return ratio;
 }
 
 //----check----//	
@@ -45,7 +82,7 @@ function myFunction() {
 		var divInp =document.createElement("li");
   		var inp = document.createElement("INPUT");
   		var rem = document.createElement("button");
-  inp.setAttribute("type", "text");
+  inp.setAttribute("type", "color");
   rem.innerHTML = "Remove";
   divInp.setAttribute("id", "color-"+x);
   rem.setAttribute("onclick", "myRemove(this)");
@@ -114,9 +151,14 @@ function CheckFunc(){
 
 }
 function compair(arrX, arr){
-	
-		if(arrX > arr[x]){
-			 html += "<td style='background-color: green;'>yes</td>";
+		calculateRatio(arrX, arr[x])
+
+		if(result == 'PASS'){
+
+			html += "<td style='background-color:" 
+			+ arrX + 
+			"; color:" 
+			+ arr[x] + ";'>"+result+"</td>";
 		}
 		else{
 			html += "<td></td>";
