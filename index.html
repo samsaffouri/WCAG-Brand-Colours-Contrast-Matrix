@@ -2,16 +2,47 @@
 <html>
 <head>
 	<title>Brand Colors</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<style type="text/css">
+		body{
+			text-align: center;
+		}
+		table{
+			margin: 0 auto;
+		}
 		td{
-			border: 1px solid #000;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			width: 75px;
+			height: 75px;
+			text-align: center;
 		}
 		ul{
 			list-style: none;
+			padding: 0px;
+		}
+		li{
+			display: inline-block;
+			margin: 10px;
+		}
+		li input{
+			width: 50px;
+			height: 50px;
+		}
+		.removeBtn{
+			display: none;
+			margin: 10px 0;
+		}
+		.txt-90{
+			transform: rotate(-90deg);
+		}
+		#arrayHere{
+			margin-bottom: 100px;
 		}
 	</style>
 </head>
 <body>
+	<div class="container">
 	<h1>Brand Colors</h1>
 	<p>Instruction text about application should be here</p>
 		<button onclick="myFunction()">Add</button>
@@ -19,13 +50,15 @@
 	<ul id="container">	
 		<li id="color-0">
 			<input type="color" name="num" id="bb" value="#000000">
+			<button class="removeBtn" onclick="myRemove(this)">Remove</button>
 		</li>
 		<li id="color-1">
 			<input type="color" name="num" value="#ffffff">
+			<button class="removeBtn" onclick="myRemove(this)">Remove</button>
 		</li>
 	</ul>
 	<div id="arrayHere"></div>
-
+</div>
 <script>
 // function from https://stackoverflow.com/a/5624139/3695983
 function hexToRgb(hex) {
@@ -83,12 +116,14 @@ function myFunction() {
   		var inp = document.createElement("INPUT");
   		var rem = document.createElement("button");
   inp.setAttribute("type", "color");
+  rem.setAttribute("class", "removeBtn");
   rem.innerHTML = "Remove";
   divInp.setAttribute("id", "color-"+x);
   rem.setAttribute("onclick", "myRemove(this)");
   divInp.appendChild(inp);
   divInp.appendChild(rem);
-  document.getElementById("container").appendChild(divInp)
+  document.getElementById("container").appendChild(divInp);
+  
   //document.body.appendChild(divInp);
   x = x+1;
   return x;
@@ -121,7 +156,8 @@ function CheckFunc(){
 
 	document.getElementById("arrayHere").innerHTML = "";
 	var xc = document.getElementById("container").getElementsByTagName("li").length; 
-	html += "<table>";
+	//html += "<table>;
+	html += "<table><tr><td class='txt-90' rowspan = " + xc+1 +" >background color</td></tr><tr><td colspan = "+ xc+1 + " >Font</td></tr>";
 	for (i = 0 ; i <= xc-1 ; i++){
 			var cc = document.getElementById("color-"+ i);
 			var cc0 = cc.getElementsByTagName("input")[0].value;
@@ -158,7 +194,7 @@ function compair(arrX, arr){
 			html += "<td style='background-color:" 
 			+ arrX + 
 			"; color:" 
-			+ arr[x] + ";'>"+result+"</td>";
+			+ arr[x] + ";'>PASS AA</td>";
 		}
 		else{
 			html += "<td></td>";
