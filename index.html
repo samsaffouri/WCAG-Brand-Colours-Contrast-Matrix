@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Brand Colors</title>
+	<title>Brand Colours</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<style type="text/css">
 		body{
@@ -10,9 +10,25 @@
 		table{
 			margin: 0 auto;
 		}
-		td{
+		tr, table, td{
 			border: 1px solid #ccc;
-			border-radius: 5px;
+
+		}
+		th{
+			width: 75px;
+			height: 75px;
+			text-align: center;
+		}
+		.boldCell-bottom{
+			border-bottom: 1px solid #999;
+			background-color: #efefef;
+		}
+		.boldCell-right{
+			border-right: 1px solid #999;
+			background-color: #efefef;
+		}
+		td{
+
 			width: 75px;
 			height: 75px;
 			text-align: center;
@@ -31,7 +47,7 @@
 		}
 		.removeBtn{
 			display: none;
-			margin: 10px 0;
+			margin: 10px auto;
 		}
 		.txt-90{
 			transform: rotate(-90deg);
@@ -39,27 +55,72 @@
 		#arrayHere{
 			margin-bottom: 100px;
 		}
+		.mainBtn{
+			width: 100px;
+		}
 	</style>
+	<script
+  src="https://code.jquery.com/jquery-3.5.0.min.js"
+  integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
+  crossorigin="anonymous"></script>
 </head>
 <body>
 	<div class="container">
-	<h1>Brand Colors</h1>
+	<h1>Brand Colors Matrix</h1>
 	<p>Instruction text about application should be here</p>
-		<button onclick="myFunction()">Add</button>
-		<button onclick="CheckFunc()">check</button>
+		<button onclick="myFunction()" class="btn btn-success btn-lg mainBtn">Add</button>
+		<button onclick="CheckFunc()" class="btn btn-primary btn-lg mainBtn">check</button>
+		<button id="cmd" class="btn btn-warning btn-lg mainBtn">PDF</button>
+
+		<div><label for="wacgLevel">Select WACG Leve:</label>
+			<select id="wacgLevel">
+			  <option value="aaLevel-sm">Level AA - Normal Text</option>
+			  <option value="aaLevel-lg">Level AA - Large Text</option>
+			  <option value="aaaLevel-sm">Level AAA - Normal Text</option>
+			  <option value="aaaLevel-lg">Level AAA - Large Text</option>
+			</select>
+		</div>	
 	<ul id="container">	
 		<li id="color-0">
 			<input type="color" name="num" id="bb" value="#000000">
-			<button class="removeBtn" onclick="myRemove(this)">Remove</button>
+			<button class="removeBtn btn btn-danger" onclick="myRemove(this)">x</button>
 		</li>
 		<li id="color-1">
 			<input type="color" name="num" value="#ffffff">
-			<button class="removeBtn" onclick="myRemove(this)">Remove</button>
+			<button class="removeBtn btn btn-danger	" onclick="myRemove(this)">x</button>
 		</li>
 	</ul>
+	<div id="editor"></div>
+
 	<div id="arrayHere"></div>
+
 </div>
+
+<script type="text/javascript" src="bundle.js"></script>
 <script>
+	var wacgVar = 1/4.5;
+	var wacgTxt = "AA Normal"
+	document.getElementById("wacgLevel").addEventListener("change", wLevelFunction);
+	function wLevelFunction(){
+		var wacg = document.getElementById("wacgLevel").value;
+		if (wacg == "aaLevel-lg" ){
+			wacgVar = 1/3;
+			wacgTxt = "AA Large";		
+		}
+		if (wacg == "aaLevel-sm" ){
+			wacgVar = 1/4.5;
+			wacgTxt = "AA Normal";
+		}
+		if (wacg == "aaaLevel-lg"  ){
+			wacgVar = 1/4.5;
+			wacgTxt = "AAA Large";
+		}	
+		if (wacg == "aaaLevel-sm"  ){
+			wacgVar = 1/7;
+			wacgTxt = "AAA Normal";
+		}	
+	return 	wacgVar, wacgTxt;
+	}
 // function from https://stackoverflow.com/a/5624139/3695983
 function hexToRgb(hex) {
   var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -103,21 +164,22 @@ function calculateRatio(cl1, cl2) {
   ? ((color2luminance + 0.05) / (color1luminance + 0.05))
   : ((color1luminance + 0.05) / (color2luminance + 0.05));
  
- if(ratio < 1/4.5) {result='PASS';}else{ result= 'FAIL';}
+ if(ratio < wacgVar) {result='PASS';}else{ result= 'FAIL';}
 
   return ratio;
 }
 
 //----check----//	
-	var x = 2;
-		
+var x = 2;
+var dd = 2;		
 function myFunction() {
-		var divInp =document.createElement("li");
-  		var inp = document.createElement("INPUT");
-  		var rem = document.createElement("button");
+
+var divInp =document.createElement("li");
+var inp = document.createElement("INPUT");
+var rem = document.createElement("button");
   inp.setAttribute("type", "color");
-  rem.setAttribute("class", "removeBtn");
-  rem.innerHTML = "Remove";
+  rem.setAttribute("class", "removeBtn btn btn-danger");
+  rem.innerHTML = "x";
   divInp.setAttribute("id", "color-"+x);
   rem.setAttribute("onclick", "myRemove(this)");
   divInp.appendChild(inp);
@@ -126,13 +188,14 @@ function myFunction() {
   
   //document.body.appendChild(divInp);
   x = x+1;
+  dd++;
+  hideBtn(dd);
   return x;
 
 }
 
 function myRemove(el){
 	var xc = document.getElementById("container").getElementsByTagName("li").length; 
-
 	var element = el.parentElement;
 	 element.remove();
 	 x = x-1;
@@ -144,11 +207,25 @@ function myRemove(el){
 		xcLi.setAttribute("id", elB);
 
 	}
-
+	dd--;
+	hideBtn(dd);
 	return x;
 }
 	var html;	
+function hideBtn(dd){
+	var rmHideBtn = document.querySelectorAll(".removeBtn");
 
+	if (dd === 2){
+	rmHideBtn.forEach(function(div) {
+ 	 div.setAttribute("style", "display:none");
+		});
+	}else{
+
+		rmHideBtn.forEach(function(div) {
+ 	 div.setAttribute("style", "display:block");
+		});
+	}
+}
 function CheckFunc(){
 	var arr = [];
 	var valC ="";
@@ -157,7 +234,7 @@ function CheckFunc(){
 	document.getElementById("arrayHere").innerHTML = "";
 	var xc = document.getElementById("container").getElementsByTagName("li").length; 
 	//html += "<table>;
-	html += "<table><tr><td class='txt-90' rowspan = " + xc+1 +" >background color</td></tr><tr><td colspan = "+ xc+1 + " >Font</td></tr>";
+	html += "<p>Brand Colours Matrix WACG 2.0 level " + wacgTxt +" Text Size<p><table id ='bypassme'><tr><th class='txt-90' rowspan = " + xc+1 +" >background</th></tr><tr><th colspan = "+ xc+1 + " >Font</th></tr>";
 	for (i = 0 ; i <= xc-1 ; i++){
 			var cc = document.getElementById("color-"+ i);
 			var cc0 = cc.getElementsByTagName("input")[0].value;
@@ -167,12 +244,12 @@ function CheckFunc(){
 		if (g == 0){
 				html += "<tr><td></td>";	
 				for (y = 0; y < arr.length; y++){
-				html += "<td>" + arr[y] + "</td>";    	
+				html += "<td class='boldCell-bottom'>" + arr[y] + "</td>";    	
 	      	}
 	      html += "</tr>";
 		}
 		if (arr.length > g > 0 ){
-				html += "<tr><td>" + arr[g] + "</td>";	
+				html += "<tr><td class='boldCell-right'>" + arr[g] + "</td>";	
 				for (x = 0; x < arr.length; x++){
 				compair(arr[g], arr, x);
 		      	}
@@ -194,7 +271,7 @@ function compair(arrX, arr){
 			html += "<td style='background-color:" 
 			+ arrX + 
 			"; color:" 
-			+ arr[x] + ";'>PASS AA</td>";
+			+ arr[x] + ";'>PASS</td>";
 		}
 		else{
 			html += "<td></td>";
