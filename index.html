@@ -32,6 +32,7 @@
 			width: 75px;
 			height: 75px;
 			text-align: center;
+			text-transform: uppercase;
 		}
 		ul{
 			list-style: none;
@@ -41,7 +42,7 @@
 			display: inline-block;
 			margin: 10px;
 		}
-		li input{
+		li input[type=color]{
 			width: 50px;
 			height: 50px;
 		}
@@ -83,10 +84,12 @@
 	<ul id="container">	
 		<li id="color-0">
 			<input type="color" name="num" id="bb" value="#000000">
+			<input type="text" name="num" value="#000000">
 			<button class="removeBtn btn btn-danger" onclick="myRemove(this)">x</button>
 		</li>
 		<li id="color-1">
 			<input type="color" name="num" value="#ffffff">
+			<input type="text" name="num" value="#ffffff">
 			<button class="removeBtn btn btn-danger	" onclick="myRemove(this)">x</button>
 		</li>
 	</ul>
@@ -176,6 +179,7 @@ function myFunction() {
 
 var divInp =document.createElement("li");
 var inp = document.createElement("INPUT");
+var inptxt = document.createElement("INPUT");
 var rem = document.createElement("button");
   inp.setAttribute("type", "color");
   rem.setAttribute("class", "removeBtn btn btn-danger");
@@ -183,6 +187,8 @@ var rem = document.createElement("button");
   divInp.setAttribute("id", "color-"+x);
   rem.setAttribute("onclick", "myRemove(this)");
   divInp.appendChild(inp);
+    divInp.appendChild(inptxt);
+
   divInp.appendChild(rem);
   document.getElementById("container").appendChild(divInp);
   
@@ -242,14 +248,19 @@ function CheckFunc(){
 		}
 	for(g = 0; g < arr.length; g++){
 		if (g == 0){
-				html += "<tr><td></td>";	
+				html += "<tr style='height:10px;'><td colspan='2' style='height:10px;''></td>";	
+				for (yz = 0; yz < arr.length; yz++){
+				html += "<td style='height:10px; background-color:"+ arr[yz] +"'></td>";    	
+	      		}
+				html += "<tr><td colspan='2'></td>";	
 				for (y = 0; y < arr.length; y++){
 				html += "<td class='boldCell-bottom'>" + arr[y] + "</td>";    	
 	      	}
 	      html += "</tr>";
 		}
+		
 		if (arr.length > g > 0 ){
-				html += "<tr><td class='boldCell-right'>" + arr[g] + "</td>";	
+				html += "<tr><td style='width:10px; background-color:"+ arr[g] +"'></td><td class='boldCell-right'>" + arr[g] + "</td>";	
 				for (x = 0; x < arr.length; x++){
 				compair(arr[g], arr, x);
 		      	}
