@@ -4,11 +4,14 @@
 	<title>Brand Colours</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<style type="text/css">
+		h1{
+			margin-top: 50px;
+		}
 		body{
-			text-align: center;
+			
 		}
 		table{
-			margin: 0 auto;
+			background-color: #ffffff;
 		}
 		tr, table, td{
 			border: 1px solid #ccc;
@@ -19,6 +22,7 @@
 			height: 75px;
 			text-align: center;
 		}
+		
 		.boldCell-bottom{
 			border-bottom: 1px solid #999;
 			background-color: #efefef;
@@ -33,72 +37,145 @@
 			height: 75px;
 			text-align: center;
 			text-transform: uppercase;
+			padding: 10px;
+			min-width: 75px;
+			max-width: 75px;
 		}
 		ul{
 			list-style: none;
 			padding: 0px;
+			display: flex;
+			flex-wrap: wrap;
 		}
 		li{
-			display: inline-block;
-			margin: 10px;
+			/*display: inline-block;*/
+			margin: 10px auto;
+			float: left;
+			width: 48%;
+			position: relative;
+			order: 2;
 		}
-		li input[type=color]{
-			width: 50px;
-			height: 50px;
+		/*li input[type=color], .newColor{
+			    width: 31px;
+			    height: 34px;
+			    display: block;
+			    padding: 0px;
+			    margin: -4px -2px -4px -4px;
+			    float: left;
+			    border: 0px;
+		}*/
+		li input{
+			width: 100%;
+		    border-radius: 6px;
+		    border: 1px solid #ccc;
+		    height: 27px;
+		    padding-left: 10px;
 		}
 		.removeBtn{
 			display: none;
-			margin: 10px auto;
+			margin: 0px;
+		    float: right;
+		    padding: 1px;
+		    border-radius: 0px 6px 6px 0px;
+		    position: absolute;
+   			top: 0;
+    		right: 0;
+		    width: 28px;
+		    height: 27px;
+		    border: none;
+		    border-left: 2px solid #fff;
 		}
 		.txt-90{
 			transform: rotate(-90deg);
 		}
 		#arrayHere{
-			margin-bottom: 100px;
+			margin: 50px;
 		}
 		.mainBtn{
 			width: 100px;
 		}
+		.contentCol{
+			background: #efefef;
+			height: 100vh;
+			overflow: auto;
+			max-height: 100vh;
+		}
+		.contentCol::-webkit-scrollbar:vertical {
+		    width: 11px;
+		}
+
+		.contentCol::-webkit-scrollbar:horizontal {
+		    height: 11px;
+		}
+
+		.contentCol::-webkit-scrollbar-thumb {
+		    border-radius: 8px;
+		    border: 2px solid white; /* should match background, can't be transparent */
+		    background-color: rgba(0, 0, 0, .5);
+		}
+		.sideCol{
+			height: 100vh;
+			border-right: 1px solid #dddddd;
+		}
+		.form-group{
+			margin: 16px 0px;
+			padding-bottom: 40px;
+			border-bottom: 1px #cccccc solid;
+		}
+		#cmd{
+			color: #000;
+		}
+		.btn-primary{
+			background-color: #255783;
+		}
+		.btn-success{
+			background-color:#2B5F2B;
+		}
 	</style>
-	<script
-  src="https://code.jquery.com/jquery-3.5.0.min.js"
-  integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
-  crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
 </head>
 <body>
-	<div class="container">
-	<h1>Brand Colors Matrix</h1>
-	<p>Instruction text about application should be here</p>
-		<button onclick="myFunction()" class="btn btn-success btn-lg mainBtn">Add</button>
-		<button onclick="CheckFunc()" class="btn btn-primary btn-lg mainBtn">check</button>
-		<button id="cmd" class="btn btn-warning btn-lg mainBtn">PDF</button>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col col-sm-4 sideCol">
+				<h1>Brand Colours Contrast Matrix</h1>
+				<p>Instruction text about application should be here</p>
+					<button onclick="myFunction()" class="btn btn-success btn-sm mainBtn">Add</button>
+					<button onclick="CheckFunc()" class="btn btn-primary btn-sm mainBtn">check</button>
+					<button id="cmd" class="btn btn-warning btn-sm mainBtn">Export to PDF</button>
 
-		<div><label for="wacgLevel">Select WACG Leve:</label>
-			<select id="wacgLevel">
-			  <option value="aaLevel-sm">Level AA - Normal Text</option>
-			  <option value="aaLevel-lg">Level AA - Large Text</option>
-			  <option value="aaaLevel-sm">Level AAA - Normal Text</option>
-			  <option value="aaaLevel-lg">Level AAA - Large Text</option>
-			</select>
-		</div>	
-	<ul id="container">	
-		<li id="color-0">
-			<input type="color" name="num" id="bb" value="#000000">
-			<input type="text" name="num" value="#000000">
-			<button class="removeBtn btn btn-danger" onclick="myRemove(this)">x</button>
-		</li>
-		<li id="color-1">
-			<input type="color" name="num" value="#ffffff">
-			<input type="text" name="num" value="#ffffff">
-			<button class="removeBtn btn btn-danger	" onclick="myRemove(this)">x</button>
-		</li>
-	</ul>
-	<div id="editor"></div>
-
-	<div id="arrayHere"></div>
-
+					<div class="form-group">
+						<label for="wacgLevel">Select WCAG Level:</label>
+						<select id="wacgLevel" class="form-control">
+						  <option value="aaLevel-sm">Level AA - Normal Text</option>
+						  <option value="aaLevel-lg">Level AA - Large Text</option>
+						  <option value="aaaLevel-sm">Level AAA - Normal Text</option>
+						  <option value="aaaLevel-lg">Level AAA - Large Text</option>
+						</select>
+					</div>
+					
+	
+				<ul id="container">	
+					<li id="color-0">
+						<input class="jscolor" value="#000000">
+						<button class="removeBtn btn btn-danger" onclick="myRemove(this)"><span aria-hidden="true">&times;</span></button>
+					</li>
+					<li id="color-1">
+						<input class="jscolor" value="#ffffff">
+						<button class="removeBtn btn btn-danger	" onclick="myRemove(this)"><span aria-hidden="true">&times;</span></button>
+					</li>
+				</ul>
+			</div>	
+			<div class="col col-sm-8 contentCol">
+				<div id="editor"></div>
+				<div id="arrayHere"></div>
+			</div>	
+		</div>
 </div>
-
+<script src="jscolor.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script type="text/javascript" src="bundle.js"></script>
 <script>
 	var wacgVar = 1/4.5;
@@ -174,30 +251,39 @@ function calculateRatio(cl1, cl2) {
 
 //----check----//	
 var x = 2;
-var dd = 2;		
+var dd = 2;	
 function myFunction() {
 
 var divInp =document.createElement("li");
-var inp = document.createElement("INPUT");
-var inptxt = document.createElement("INPUT");
+//var inp = document.createElement("INPUT");
+//var inptxt = document.createElement("INPUT");
 var rem = document.createElement("button");
-  inp.setAttribute("type", "color");
+  //inp.setAttribute("type", "color");
+  //inptxt.setAttribute("class", "newColorTxt")
+  //inp.setAttribute("class", "jscolor");
+  //inp.setAttribute("value", "#ffffff");
+   var input = document.createElement('INPUT')
+        var picker = new jscolor(input);
+        picker.fromHSV(0, 0, 0);
+    
+        document.getElementById('container').appendChild(input)
   rem.setAttribute("class", "removeBtn btn btn-danger");
-  rem.innerHTML = "x";
-  divInp.setAttribute("id", "color-"+x);
   rem.setAttribute("onclick", "myRemove(this)");
-  divInp.appendChild(inp);
-    divInp.appendChild(inptxt);
-
+  divInp.setAttribute("id", "color-"+x);
+  rem.innerHTML = "<span aria-hidden='true'>&times;</span>";
+  //divInp.appendChild(inp);
+  //divInp.appendChild(inptxt);
+  divInp.appendChild(input);
   divInp.appendChild(rem);
-  document.getElementById("container").appendChild(divInp);
+
   
+
+  document.getElementById("container").appendChild(divInp);
   //document.body.appendChild(divInp);
   x = x+1;
   dd++;
   hideBtn(dd);
   return x;
-
 }
 
 function myRemove(el){
@@ -248,9 +334,9 @@ function CheckFunc(){
 		}
 	for(g = 0; g < arr.length; g++){
 		if (g == 0){
-				html += "<tr style='height:10px;'><td colspan='2' style='height:10px;''></td>";	
+				html += "<tr style='height:10px; padding:0px; min-width:10px;'><td colspan='2' style='height:10px;''></td>";	
 				for (yz = 0; yz < arr.length; yz++){
-				html += "<td style='height:10px; background-color:"+ arr[yz] +"'></td>";    	
+				html += "<td style='min-width:10px; height:10px; padding:0px; background-color:#"+ arr[yz] +"'></td>";    	
 	      		}
 				html += "<tr><td colspan='2'></td>";	
 				for (y = 0; y < arr.length; y++){
@@ -260,7 +346,7 @@ function CheckFunc(){
 		}
 		
 		if (arr.length > g > 0 ){
-				html += "<tr><td style='width:10px; background-color:"+ arr[g] +"'></td><td class='boldCell-right'>" + arr[g] + "</td>";	
+				html += "<tr><td style='min-width:10px; padding:10px ; width:10px; background-color:#"+ arr[g] +"'></td><td class='boldCell-right'>" + arr[g] + "</td>";	
 				for (x = 0; x < arr.length; x++){
 				compair(arr[g], arr, x);
 		      	}
@@ -279,15 +365,14 @@ function compair(arrX, arr){
 
 		if(result == 'PASS'){
 
-			html += "<td style='background-color:" 
+			html += "<td style='background-color:#" 
 			+ arrX + 
-			"; color:" 
+			"; color:#" 
 			+ arr[x] + ";'>PASS</td>";
 		}
 		else{
 			html += "<td></td>";
 		}
-
 }
 </script>	
 

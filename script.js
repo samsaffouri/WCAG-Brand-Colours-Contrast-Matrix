@@ -1,4 +1,14 @@
-var _ = require('lodash');
+var doc = new jsPDF();
+var specialElementHandlers = {
+    '#editor': function (element, renderer) {
+        return true;
+    }
+};
 
-var testarr =[1,2,3,4,5,6,7,8];
-console.log('answer:', _.without(testarr, 3));
+$('#cmd').click(function () {
+    doc.fromHTML($('#arrayHere').html(), 15, 15, {
+        'width': 170,
+            'elementHandlers': specialElementHandlers
+    });
+    doc.save('sample-file.pdf');
+});

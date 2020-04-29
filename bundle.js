@@ -1,28 +1,16 @@
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+var doc = new jsPDF();
+var specialElementHandlers = {
+    '#editor': function (element, renderer) {
+        return true;
+    }
+};
 
-Usage: npm <command>
-
-where <command> is one of:
-    access, adduser, audit, bin, bugs, c, cache, ci, cit,
-    clean-install, clean-install-test, completion, config,
-    create, ddp, dedupe, deprecate, dist-tag, docs, doctor,
-    edit, explore, fund, get, help, help-search, hook, i, init,
-    install, install-ci-test, install-test, it, link, list, ln,
-    login, logout, ls, org, outdated, owner, pack, ping, prefix,
-    profile, prune, publish, rb, rebuild, repo, restart, root,
-    run, run-script, s, se, search, set, shrinkwrap, star,
-    stars, start, stop, t, team, test, token, tst, un,
-    uninstall, unpublish, unstar, up, update, v, version, view,
-    whoami
-
-npm <command> -h  quick help on <command>
-npm -l            display full usage info
-npm help <term>   search for help on <term>
-npm help npm      involved overview
-
-Specify configs in the ini-formatted file:
-    /Users/issams/.npmrc
-or on the command line via: npm <command> --key value
-Config info can be viewed via: npm help config
-
-npm@6.14.4 /usr/local/lib/node_modules/npm
-
+$('#cmd').click(function () {
+    doc.fromHTML($('#arrayHere').html(), 15, 15, {
+        'width': 170,
+            'elementHandlers': specialElementHandlers
+    });
+    doc.save('sample-file.pdf');
+});
+},{}]},{},[1]);
