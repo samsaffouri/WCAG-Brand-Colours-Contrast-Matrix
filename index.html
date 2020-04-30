@@ -4,6 +4,9 @@
 	<title>Brand Colours</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<style type="text/css">
+		body{
+			-webkit-print-color-adjust: exact !important;
+		}
 		h1{
 			margin-top: 50px;
 		}
@@ -12,15 +15,20 @@
 		}
 		table{
 			background-color: #ffffff;
+			 	color-adjust: exact;
+
 		}
 		tr, table, td{
 			border: 1px solid #ccc;
+			 	color-adjust: exact;
 
 		}
 		th{
 			width: 75px;
 			height: 75px;
 			text-align: center;
+			 	color-adjust: exact;
+
 		}
 		
 		.boldCell-bottom{
@@ -40,6 +48,8 @@
 			padding: 10px;
 			min-width: 75px;
 			max-width: 75px;
+			color-adjust: exact;
+			-webkit-print-color-adjust: exact;
 		}
 		ul{
 			list-style: none;
@@ -55,15 +65,9 @@
 			position: relative;
 			order: 2;
 		}
-		/*li input[type=color], .newColor{
-			    width: 31px;
-			    height: 34px;
-			    display: block;
-			    padding: 0px;
-			    margin: -4px -2px -4px -4px;
-			    float: left;
-			    border: 0px;
-		}*/
+		.alert-danger{
+			margin :24px auto;
+		}
 		li input{
 			width: 100%;
 		    border-radius: 6px;
@@ -131,18 +135,37 @@
 		.btn-success{
 			background-color:#2B5F2B;
 		}
+	@media print {
+		 .d-print-none {
+		  display: none!important;
+		 }
+		 .d-print-block{
+		 	 	color-adjust: exact;
+		 	 	-webkit-print-color-adjust: exact;
+		 	 	display: block;
+
+		 }
+		
+		
+		}
+		@page {
+			size:A3 landscape;
+			align-content: center; 
+		}
+
 	</style>
-	<script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
 </head>
 <body>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col col-sm-4 sideCol">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+	<div class="container-fluid d-print-block">
+		<div class="row d-print-block">
+			<div class="col col-sm-4 sideCol d-print-none">
 				<h1>Brand Colours Contrast Matrix</h1>
 				<p>Instruction text about application should be here</p>
 					<button onclick="myFunction()" class="btn btn-success btn-sm mainBtn">Add</button>
-					<button onclick="CheckFunc()" class="btn btn-primary btn-sm mainBtn">check</button>
-					<button id="cmd" class="btn btn-warning btn-sm mainBtn">Export to PDF</button>
+					<button onclick="CheckFunc()" class="btn btn-primary btn-sm mainBtn">Check</button>
+					<button id="cmd" class="btn btn-warning btn-sm mainBtn">Download</button>
+				    <div id="editor"></div>
 
 					<div class="form-group">
 						<label for="wacgLevel">Select WCAG Level:</label>
@@ -166,15 +189,13 @@
 					</li>
 				</ul>
 			</div>	
-			<div class="col col-sm-8 contentCol">
-				<div id="editor"></div>
-				<div id="arrayHere"></div>
+			<div class="col col-sm-8 contentCol d-print-block">
+				<div id="arrayHere" class="d-print-block"></div>
 			</div>	
 		</div>
 </div>
 <script src="jscolor.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script type="text/javascript" src="bundle.js"></script>
 <script>
@@ -326,7 +347,7 @@ function CheckFunc(){
 	document.getElementById("arrayHere").innerHTML = "";
 	var xc = document.getElementById("container").getElementsByTagName("li").length; 
 	//html += "<table>;
-	html += "<p>Brand Colours Matrix WACG 2.0 level " + wacgTxt +" Text Size<p><table id ='bypassme'><tr><th class='txt-90' rowspan = " + xc+1 +" >background</th></tr><tr><th colspan = "+ xc+1 + " >Font</th></tr>";
+	html += "<table id ='bypassme'><tr><th colspan = "+ xc+1 + " style='text-align:left;padding: 16px;'>Brand Colours Matrix WACG 2.0 level " + wacgTxt +" Text Size</th></tr><tr><th class='txt-90' rowspan = " + xc+1 +" >background</th></tr><tr><th colspan = "+ xc+1 + " >Font</th></tr>";
 	for (i = 0 ; i <= xc-1 ; i++){
 			var cc = document.getElementById("color-"+ i);
 			var cc0 = cc.getElementsByTagName("input")[0].value;
@@ -334,9 +355,9 @@ function CheckFunc(){
 		}
 	for(g = 0; g < arr.length; g++){
 		if (g == 0){
-				html += "<tr style='height:10px; padding:0px; min-width:10px;'><td colspan='2' style='height:10px;''></td>";	
+				html += "<tr style='height:10px; padding:0px; min-width:10px;'><td colspan='2' style='height:10px;'></td>";	
 				for (yz = 0; yz < arr.length; yz++){
-				html += "<td style='min-width:10px; height:10px; padding:0px; background-color:#"+ arr[yz] +"'></td>";    	
+				html += "<td style='min-width:10px; height:10px; padding:0px; background-color:#"+ arr[yz] +"!important'></td>";    	
 	      		}
 				html += "<tr><td colspan='2'></td>";	
 				for (y = 0; y < arr.length; y++){
@@ -346,7 +367,7 @@ function CheckFunc(){
 		}
 		
 		if (arr.length > g > 0 ){
-				html += "<tr><td style='min-width:10px; padding:10px ; width:10px; background-color:#"+ arr[g] +"'></td><td class='boldCell-right'>" + arr[g] + "</td>";	
+				html += "<tr><td style='min-width:10px; padding:10px ; width:10px; background-color:#"+ arr[g] +"!important'></td><td class='boldCell-right'>" + arr[g] + "</td>";	
 				for (x = 0; x < arr.length; x++){
 				compair(arr[g], arr, x);
 		      	}
@@ -367,14 +388,47 @@ function compair(arrX, arr){
 
 			html += "<td style='background-color:#" 
 			+ arrX + 
-			"; color:#" 
-			+ arr[x] + ";'>PASS</td>";
+			"!important; color:#" 
+			+ arr[x] + "!important;'>PASS</td>";
 		}
 		else{
 			html += "<td></td>";
 		}
 }
-</script>	
+var printBtn = document.getElementById('cmd');
 
+  printBtn.addEventListener('click', saveAs);
+
+  
+
+  function saveAs(){
+    var table= document.getElementById("bypassme");
+    var noTable = document.getElementById("editor");
+
+    if (table == null){
+    noTable.setAttribute("class", "alert alert-danger");
+    noTable.innerHTML = "No Color Matrix was Generated! Please check the color contrast first";
+  }else{
+  	      var tableWidth = table.offsetWidth;
+  	      noTable.innerHTML ="";
+  	      noTable.classList.remove("alert", "alert-danger");
+  	  domtoimage.toJpeg(document.getElementById('bypassme'),{ quality: 0.95,bgcolor:'#ffffff', width: tableWidth})
+
+    .then(function (dataUrl) {
+        var link = document.createElement('a');
+        link.download = 'my-image-name.jpeg';
+        link.href = dataUrl;
+        link.click();      
+
+    });
+    }
+  }
+
+
+  
+
+</script>
+<script src="node_modules/dom-to-image-more/src/dom-to-image-more.js" />	
+<script type="text/javascript" src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </body>
 <html>

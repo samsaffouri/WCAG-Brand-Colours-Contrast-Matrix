@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/samsaffouri/gitlearing-v1#readme",
   "dependencies": {
-    "jspdf": "^1.5.3"
+    "dom-to-image-more": "^2.8.0",
+    "promise": "^8.1.0"
   }
 }
