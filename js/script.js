@@ -186,7 +186,7 @@ function saveAs(){
     var noTable = document.getElementById("editor");
     if (table == null){
         noTable.setAttribute("class", "alert alert-danger");
-        noTable.innerHTML = "No Color Matrix was Generated! Please check the color contrast first";
+        noTable.innerHTML = "No Colour Matrix was Generated! Please check the color contrast first";
     }else{
         var tableWidth = table.offsetWidth;
         noTable.innerHTML ="";
