@@ -128,7 +128,7 @@ function hideBtn(dd){
         });
     }
 }
-//---Check and crate Colours Matrix---//
+//---Check and create Colours Matrix---//
 function CheckFunc(){
     var arr = [];
     html ="";
